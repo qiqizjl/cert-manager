@@ -348,6 +348,7 @@ func NewSolver(ctx *controller.Context) *Solver {
 			azuredns.NewDNSProviderCredentials,
 			acmedns.NewDNSProviderHostBytes,
 			rfc2136.NewDNSProviderCredentials,
+			alibabadns.NewDNSProviderCredentials,
 		},
 	}
 }
