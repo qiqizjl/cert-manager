@@ -251,10 +251,10 @@ func ValidateACMEIssuerDNS01Config(iss *v1alpha1.ACMEIssuerDNS01Config, fldPath 
 				el = append(el, field.Forbidden(fldPath.Child("alibabadns"), "may not specify more than one provider type"))
 			} else {
 				numProviders++
-				el = append(el, ValidateSecretKeySelector(&p.AlibabaDNS.AccessKeySecret, fldPath.Child("alibabadns", "accessKeySecretRef"))...)
 				if len(p.AlibabaDNS.AccessKeyID) == 0 {
 					el = append(el, field.Required(fldPath.Child("alibabadns", "accessKeyID"), ""))
 				}
+				el = append(el, ValidateSecretKeySelector(&p.AlibabaDNS.AccessKeySecret, fldPath.Child("alibabadns", "accessKeySecretRef"))...)
 			}
 		}
 
