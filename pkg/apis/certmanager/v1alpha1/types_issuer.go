@@ -237,7 +237,7 @@ type ACMEIssuerDNS01ProviderRFC2136 struct {
 // configuration for Alibaba Ccoud DNS
 type ACMEIssuerDNS01ProviderAlibabaDNS struct {
 	AccessKeyID     string            `json:"accessKeyID"`
-	AccessKeySecret SecretKeySelector `json:"accessKeySecret"`
+	AccessKeySecret SecretKeySelector `json:"accessKeySecretRef"`
 }
 
 // IssuerStatus contains status information about an Issuer
