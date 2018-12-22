@@ -13,6 +13,7 @@ package alibabadns
 import (
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/alidns"
 	"os"
+	"time"
 )
 
 // DNSProvider implements the util.ChallengeProvider interface
@@ -76,4 +77,10 @@ func (a *DNSProvider) removeTxt(domain, fqdn string) error {
 	removeRecord.Type = "TXT"
 	_, err := a.dnsClient.DeleteSubDomainRecords(removeRecord)
 	return err
+}
+
+// Timeout returns the timeout and interval to use when checking for DNS
+// propagation. Adjusting here to cope with spikes in propagation times.
+func (a *DNSProvider) Timeout() (timeout, interval time.Duration) {
+	return 120 * time.Second, 2 * time.Second
 }

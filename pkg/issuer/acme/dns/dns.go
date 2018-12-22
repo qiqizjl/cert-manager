@@ -312,11 +312,11 @@ func (s *Solver) solverForIssuerProvider(issuer v1alpha1.GenericIssuer, provider
 		if len(providerConfig.AlibabaDNS.AccessKeySecret.Name) > 0 {
 			accessKeySecret, err := s.secretLister.Secrets(resourceNamespace).Get(providerConfig.AlibabaDNS.AccessKeySecret.Name)
 			if err != nil {
-				return nil, nil, fmt.Errorf("error getting alibaba dns service account: %s", err.Error())
+				return nil, fmt.Errorf("error getting alibaba dns service account: %s", err.Error())
 			}
 			secretBytes, ok := accessKeySecret.Data[providerConfig.AlibabaDNS.AccessKeySecret.Key]
 			if !ok {
-				return nil, nil, fmt.Errorf("error getting alibaba dns secret key: key '%s' not found in secret", providerConfig.AlibabaDNS.AccessKeySecret.Key)
+				return nil, fmt.Errorf("error getting alibaba dns secret key: key '%s' not found in secret", providerConfig.AlibabaDNS.AccessKeySecret.Key)
 			}
 			secret = string(secretBytes)
 		}
@@ -326,7 +326,7 @@ func (s *Solver) solverForIssuerProvider(issuer v1alpha1.GenericIssuer, provider
 			s.DNS01Nameservers,
 		)
 		if err != nil {
-			return nil, nil, fmt.Errorf("error instantiating rfc2136 challenge solver: %s", err.Error())
+			return nil, fmt.Errorf("error instantiating rfc2136 challenge solver: %s", err.Error())
 		}
 	default:
 		return nil, fmt.Errorf("no dns provider config specified for provider %q", providerName)
