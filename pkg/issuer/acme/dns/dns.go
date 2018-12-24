@@ -19,7 +19,7 @@ package dns
 import (
 	"context"
 	"fmt"
-	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/alibabadns"
+	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/alidns"
 	"strings"
 	"time"
 
@@ -59,7 +59,7 @@ type dnsProviderConstructors struct {
 	azureDNS   func(clientID, clientSecret, subscriptionID, tenentID, resourceGroupName, hostedZoneName string, dns01Nameservers []string) (*azuredns.DNSProvider, error)
 	acmeDNS    func(host string, accountJson []byte, dns01Nameservers []string) (*acmedns.DNSProvider, error)
 	rfc2136    func(nameserver, tsigAlgorithm, tsigKeyName, tsigSecret string) (*rfc2136.DNSProvider, error)
-	alibabaDNS func(accessKeyID, accessKeySecret string, dns01Namespaces []string) (*alibabadns.DNSProvider, error)
+	alidns     func(accessKeyID, accessKeySecret string, dns01Namespaces []string) (*alidns.DNSProvider, error)
 }
 
 // Solver is a solver for the acme dns01 challenge.
@@ -307,21 +307,21 @@ func (s *Solver) solverForIssuerProvider(issuer v1alpha1.GenericIssuer, provider
 		if err != nil {
 			return nil, fmt.Errorf("error instantiating rfc2136 challenge solver: %s", err.Error())
 		}
-	case providerConfig.AlibabaDNS != nil:
+	case providerConfig.Alidns != nil:
 		var secret string
-		if len(providerConfig.AlibabaDNS.AccessKeySecret.Name) > 0 {
-			accessKeySecret, err := s.secretLister.Secrets(resourceNamespace).Get(providerConfig.AlibabaDNS.AccessKeySecret.Name)
+		if len(providerConfig.Alidns.AccessKeySecret.Name) > 0 {
+			accessKeySecret, err := s.secretLister.Secrets(resourceNamespace).Get(providerConfig.Alidns.AccessKeySecret.Name)
 			if err != nil {
 				return nil, fmt.Errorf("error getting alibaba dns service account: %s", err.Error())
 			}
-			secretBytes, ok := accessKeySecret.Data[providerConfig.AlibabaDNS.AccessKeySecret.Key]
+			secretBytes, ok := accessKeySecret.Data[providerConfig.Alidns.AccessKeySecret.Key]
 			if !ok {
-				return nil, fmt.Errorf("error getting alibaba dns secret key: key '%s' not found in secret", providerConfig.AlibabaDNS.AccessKeySecret.Key)
+				return nil, fmt.Errorf("error getting alibaba dns secret key: key '%s' not found in secret", providerConfig.Alidns.AccessKeySecret.Key)
 			}
 			secret = string(secretBytes)
 		}
-		impl, err = s.dnsProviderConstructors.alibabaDNS(
-			providerConfig.AlibabaDNS.AccessKeyID,
+		impl, err = s.dnsProviderConstructors.alidns(
+			providerConfig.Alidns.AccessKeyID,
 			secret,
 			s.DNS01Nameservers,
 		)
@@ -348,7 +348,7 @@ func NewSolver(ctx *controller.Context) *Solver {
 			azuredns.NewDNSProviderCredentials,
 			acmedns.NewDNSProviderHostBytes,
 			rfc2136.NewDNSProviderCredentials,
-			alibabadns.NewDNSProviderCredentials,
+			alidns.NewDNSProviderCredentials,
 		},
 	}
 }

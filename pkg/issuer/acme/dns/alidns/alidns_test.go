@@ -5,7 +5,7 @@ This file contains portions of code directly taken from the 'xenolf/lego' projec
 A copy of the license for this code can be found in the file named LICENSE in
 this directory.
 */
-package alibabadns
+package alidns
 
 import (
 	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/util"
@@ -30,7 +30,7 @@ func init() {
 	}
 }
 
-func TestLiveAlibabaDnsPresent(t *testing.T) {
+func TestLiveAlidnsPresent(t *testing.T) {
 	if !alibabaLiveTest {
 		t.Skip("skipping live test")
 	}
@@ -42,7 +42,7 @@ func TestLiveAlibabaDnsPresent(t *testing.T) {
 }
 
 //
-func TestLiveAlibabaDnsCleanUp(t *testing.T) {
+func TestLiveAlidnsCleanUp(t *testing.T) {
 	if !alibabaLiveTest {
 		t.Skip("skipping live test")
 	}

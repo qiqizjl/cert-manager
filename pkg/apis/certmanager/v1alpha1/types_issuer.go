@@ -153,7 +153,7 @@ type ACMEIssuerDNS01Provider struct {
 	AzureDNS   *ACMEIssuerDNS01ProviderAzureDNS   `json:"azuredns,omitempty"`
 	AcmeDNS    *ACMEIssuerDNS01ProviderAcmeDNS    `json:"acmedns,omitempty"`
 	RFC2136    *ACMEIssuerDNS01ProviderRFC2136    `json:"rfc2136,omitempty"`
-	AlibabaDNS *ACMEIssuerDNS01ProviderAlibabaDNS `json:"alibabadns,omitempty"`
+	Alidns     *ACMEIssuerDNS01ProviderAlidns     `json:"alidns,omitempty"`
 }
 
 // ACMEIssuerDNS01ProviderAkamai is a structure containing the DNS
@@ -233,9 +233,9 @@ type ACMEIssuerDNS01ProviderRFC2136 struct {
 	TSIGAlgorithm string `json:"tsigAlgorithm"`
 }
 
-// ACMEIssuerDNS01ProviderAlibabaDNS is a structure containing the
+// ACMEIssuerDNS01ProviderAlidns is a structure containing the
 // configuration for Alibaba Ccoud DNS
-type ACMEIssuerDNS01ProviderAlibabaDNS struct {
+type ACMEIssuerDNS01ProviderAlidns struct {
 	AccessKeyID     string            `json:"accessKeyID"`
 	AccessKeySecret SecretKeySelector `json:"accessKeySecretRef"`
 }
