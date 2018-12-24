@@ -155,6 +155,17 @@ RFC2136
         name: my-secret
         key: tsigkey
 
+AliDNS
+========
+
+.. code-block:: yaml
+
+    alidns:
+      accessKeyID: xxxx
+      accessKeySecretRef:
+       name: prod-aliyun-access
+       key: access-key-secret
+
 ACME-DNS
 ========
 
